@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<robot>
+    <!--Add gazebo specific definitions here-->
+
+    <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+         <robot_sim_type>gazebo_ros2_control/GazeboSystem</robot_sim_type>
+         <parameters>$(find my_plastikkbaat)/config/mobile_arm_controller.yaml</parameters>
+        </plugin>
+    </gazebo>
+
+    <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+
+    <!--Add joint command/state interface definitions-->
+
+    <joint name="arm_base_joint">
+        <command_interface name="position">
+         <param name="min">-${pi}</param>
+         <param name="max">${pi}</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+    </joint>
+
+    <joint name="link_1_armbaat_joint">
+        <command_interface name="position">
+         <param name="min">-${pi/2}</param>
+         <param name="max">${pi/2}</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+    </joint>
+
+    <joint name="link_2_armbaat_joint">
+        <command_interface name="position">
+         <param name="min">-${pi/2}</param>
+         <param name="max">${pi/2}</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+    </joint>
+
+    <joint name="link_3_armbaat_joint">
+        <command_interface name="position">
+         <param name="min">-${pi/2}</param>
+         <param name="max">${pi/2}</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+    </joint>
+
+
+    </ros2_control>
+
+    <gazebo>
+    <plugin name="mobile_base_controller" filename="libgazebo_ros_diff_drive.so">
+        
+
+            <remapping>cmd_vel:=custom_cdm_vel</remapping>
+            <remapping>odom:=custum_odom_vel</remapping>
+
+        <update_rate>100</update_rate>
+
+        <!--1 for differential drive; 2 for skid steer drive-->
+        <num_wheel_pairs>1</num_wheel_pairs>
+
+        <left_joint>left_wheel_joint</left_joint>
+        <right_joint>right_wheel_joint</right_joint>
+
+        <wheel_separation>0.51</wheel_separation>
+
+        <wheel_diameter>0.2</wheel_diameter>
+
+        <max_wheel_torque>2000</max_wheel_torque>
+        <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+        <publish_odom>true</publish_odom>
+        <publish_odom_tf>true</publish_odom_tf>
+        <publish_wheel_tf>false</publish_wheel_tf>
+
+        <odometry_frame>odom</odometry_frame>
+        <robot_base_frame>mobile_base_link</robot_base_frame>
+    </plugin>
+    </gazebo>
+
+    
+    <gazebo reference="support_boks_link">
+    <mu1>0.01</mu1>
+    <mu2>0.01</mu2>
+    <kp>1000000.0</kp>       
+    <kd>1000.0</kd>       
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
+    </gazebo>
+    
+    <!--
+    <gazebo reference="left_wheel_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>50000.0</kp>       
+    <kd>300.0</kd>       
+    <minDepth>0.01</minDepth>
+    <maxVel>0.3</maxVel>
+    </gazebo>
+
+    <gazebo reference="right_wheel_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>50000.0</kp>       
+    <kd>300.0</kd>       
+    <minDepth>0.01</minDepth>
+    <maxVel>0.3</maxVel>
+    </gazebo>
+    -->
+
+
+
+</robot>

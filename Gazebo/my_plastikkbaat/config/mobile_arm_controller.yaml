@@ -1,0 +1,26 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Controller update rate in Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    boat_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+  
+boat_arm_controller:
+  ros__parameters:
+    joints:
+      - arm_base_joint
+      - link_1_armbaat_joint
+      - link_2_armbaat_joint
+      - link_3_armbaat_joint
+      # ...
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+      - velocity

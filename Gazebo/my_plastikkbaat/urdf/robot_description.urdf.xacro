@@ -1,0 +1,288 @@
+<?xml version="1.0" ?>
+
+<robot name="ROBOT_NAME" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Optional: Disable physics by setting the model as static -->
+  <!--gazebo>
+    <static>true</static>
+  </gazebo--> 
+
+  <xacro:include filename="$(find my_plastikkbaat)/urdf/common_macros.xacro" />
+  <xacro:include filename="$(find my_plastikkbaat)/urdf/mobile_manipulator.xacro" />
+
+
+  <!-- Define a dummy link -->
+  <link name="mobile_base_dummy"/>
+
+  <joint name="mobile_base_joint" type="fixed">
+    <parent link="mobile_base_dummy"/>
+    <child link="mobile_base_link"/>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/>
+  </joint>
+
+  <link name="mobile_base_link">
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+           <geometry>
+           <mesh filename="$(find my_plastikkbaat)/meshes/306baatopdatert.stl" />
+
+          </geometry>
+      </visual>
+      <collision>
+          <origin xyz="-0.07 0 0.2975" rpy="0 0 0"/>
+          <geometry>
+              <box size="1.4 0.8 0.575"/>
+          </geometry>
+      </collision>
+      <xacro:inertial_box length="1.4" width="0.8" height="0.575" density="600">
+      <origin xyz="-0.07 0 0.2975" rpy="0 0 0"/>
+      </xacro:inertial_box>
+
+
+  </link>
+
+  <joint type="revolute" name="arm_base_joint">
+    <origin xyz="-0.5 0.0 0.57" rpy="0.0 0.0 0.0"/>
+    <child link="arm_base_link"/>
+    <parent link="mobile_base_link"/>
+    <axis xyz="0 0 1" rpy="0 0 0"/>
+    <limit effort="100" velocity="100" lower="-${pi}" upper="${pi}"/>
+    <dynamics damping="0.7" friction="1.0"/>
+</joint>
+
+
+  <link name="arm_base_link">
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+           <geometry>
+           <mesh filename="$(find my_plastikkbaat)/meshes/arm_base_mesh.stl" />
+
+          </geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 0 0.1" rpy="0 0 0"/>
+          <geometry>
+              <cylinder length="0.2" radius="${0.135/2}" />
+
+          </geometry>
+      </collision>
+      <xacro:inertial_cylinder radius="${0.135/2}" length="0.2" density="600">
+       <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      </xacro:inertial_cylinder>
+
+  </link>
+
+  <joint type="revolute" name="link_1_armbaat_joint">
+    <origin xyz="0.0 0.0 0.2" rpy="-${pi/2} 0.0 0.0"/>
+    <child link="link_1_armbaat_link"/>
+    <parent link="arm_base_link"/>
+    <axis xyz="0 0 1" rpy="0 0 0"/>
+    <limit effort="100" velocity="100" lower="-${pi}" upper="${pi}"/>
+    <dynamics damping="0.7" friction="1.0"/>
+</joint>
+
+
+  <link name="link_1_armbaat_link">
+      <visual>
+          <origin xyz="0 -0.32 0" rpy="${pi/2} 0 0"/>
+           <geometry>
+           <mesh filename="$(find my_plastikkbaat)/meshes/link_1_armbaat.stl" />
+
+          </geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 -0.32 0" rpy="${pi/2} 0 0"/>
+          <geometry>
+              <cylinder length="0.635" radius="${0.075/2}" />
+
+          </geometry>
+      </collision>
+      <xacro:inertial_cylinder radius="${0.075/2}" length="0.635" density="600">
+       <origin xyz="0 -0.32 0.0" rpy="${pi/2} 0 0"/>
+      </xacro:inertial_cylinder>
+
+  </link>
+
+    <joint type="revolute" name="link_2_armbaat_joint">
+     <origin xyz="0.0 -0.64 0.0" rpy="0.0 0.0 0.0"/>
+     <child link="link_2_armbaat_link"/>
+     <parent link="link_1_armbaat_link"/>
+     <axis xyz="0 0 1" rpy="0 0 0"/>
+     <limit effort="100" velocity="100" lower="-${pi}" upper="${pi}"/>
+     <dynamics damping="0.7" friction="1.0"/>
+    </joint>
+
+
+  <link name="link_2_armbaat_link">
+      <visual>
+          <origin xyz="0 -0.25 0" rpy=" ${pi/2} 0 0"/>
+           <geometry>
+           <mesh filename="$(find my_plastikkbaat)/meshes/link_2_armbaat.stl" />
+
+          </geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 -0.25 0" rpy=" ${pi/2} 0 0"/>
+          <geometry>
+              <cylinder length="0.5" radius="${0.075/2}" />
+
+          </geometry>
+      </collision>
+      <xacro:inertial_cylinder radius="${0.075/2}" length="0.5" density="600">
+       <origin xyz="0 -0.25 0" rpy="${pi/2} 0 0"/>
+      </xacro:inertial_cylinder>
+
+  </link>
+
+
+   <joint type="revolute" name="link_3_armbaat_joint">
+     <origin xyz="0.0 -0.505 0.0" rpy="0.0 0.0 0.0"/>
+     <child link="link_3_armbaat_link"/>
+     <parent link="link_2_armbaat_link"/>
+     <axis xyz="0 0 1" rpy="0 0 0"/>
+     <limit effort="100" velocity="100" lower="-${pi}" upper="${pi}"/>
+     <dynamics damping="0.7" friction="1.0"/>
+    </joint>
+
+
+  <link name="link_3_armbaat_link">
+      <visual>
+          <origin xyz="0 -0.19 0" rpy="${pi/2} 0 0"/>
+           <geometry>
+           <mesh filename="$(find my_plastikkbaat)/meshes/link_3_armbaat.stl" />
+
+          </geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 -0.095 0" rpy="${pi/2} 0 0"/>
+          <geometry>
+              <cylinder length="0.19" radius="${0.075/2}" />
+
+          </geometry>
+      </collision>
+      <xacro:inertial_cylinder radius="${0.075/2}" length="0.19" density="600">
+       <origin xyz="0 -0.095 0" rpy="${pi/2} 0 0"/>
+      </xacro:inertial_cylinder>
+
+  </link>
+
+   <joint name="thruster_joint" type="fixed">
+     <parent link="mobile_base_link"/>
+      <child link="thruster_base" />
+      <origin xyz="0.75 0 0.12" rpy="0 0 0"/>
+    </joint>
+
+    <link name="thruster_base">
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+           <geometry>
+           <box size="0.1 0.4 0.12"/>
+          </geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+              <box size="0.1 0.4 0.15"/>
+          </geometry>
+      </collision>
+      <xacro:inertial_box length="0.1" width="0.4" height="0.12" density="600">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      </xacro:inertial_box>
+    </link>
+
+    <joint type="continuous" name="right_wheel_joint">
+      <origin xyz="0.0 0.255 -0.06" rpy="-${pi/2} 0.0 0.0"/>
+      <child link="right_wheel_link"/>
+      <parent link="thruster_base"/>
+      <axis xyz="0 0 1" rpy="0 0 0"/>
+      <limit effort="100" velocity="100"/>
+      <dynamics damping="0.7" friction="1.0"/>
+    </joint>
+
+    <link name="right_wheel_link">
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+           <geometry>
+           <mesh filename="$(find my_plastikkbaat)/meshes/wheel_mesh.stl" />
+
+          </geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+              <cylinder length="0.1" radius="0.1" />
+
+          </geometry>
+      </collision>
+      <xacro:inertial_cylinder radius="0.1" length="0.1" density="600">
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+      </xacro:inertial_cylinder>
+
+  </link>
+
+  <joint type="continuous" name="left_wheel_joint">
+      <origin xyz="0.0 -0.255 -0.06" rpy="-${pi/2} 0.0 0.0"/>
+      <child link="left_wheel_link"/>
+      <parent link="thruster_base"/>
+      <axis xyz="0 0 1" rpy="0 0 0"/>
+      <limit effort="100" velocity="100"/>
+      <dynamics damping="0.7" friction="1.0"/>
+    </joint>
+
+    <link name="left_wheel_link">
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+           <geometry>
+           <mesh filename="$(find my_plastikkbaat)/meshes/wheel_mesh.stl" />
+
+          </geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+              <cylinder length="0.1" radius="0.1" />
+
+          </geometry>
+      </collision>
+      <xacro:inertial_cylinder radius="0.1" length="0.1" density="600">
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+      </xacro:inertial_cylinder>
+
+  </link>
+
+  <joint name="support_boks_joint" type="fixed">
+     <parent link="mobile_base_link"/>
+      <child link="support_boks_link" />
+      <origin xyz="-0.5 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="support_boks_link">
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+           <geometry>
+           <box size="0.0 0.0 0.0"/>
+          </geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+              <box size="0.1 0.4 0.04"/>
+          </geometry>
+      </collision>
+      <inertial>
+            <mass value="0.0"/> <!-- Ingen masse for å unngå vekten -->
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+      </inertial>
+
+    </link>
+
+
+
+
+
+
+
+
+</robot>
+
+
+
